@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Chọn phòng</title>
+<style>
+    .room {
+    margin: 8px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    width: 120px;
+    display: inline-block;
+    text-align: center;
+    }
+    .full {
+    background-color: #f8d7da;
+    }
+    .available {
+    background-color: #d4edda;
+    cursor: pointer;
+    }
+
+    body {
+    font-family: sans-serif;
+    padding: 20px;
+    }
+    .room {
+    margin: 8px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 120px;
+    display: inline-block;
+    text-align: center;
+    }
+    .full {
+    background-color: #f8d7da;
+    }
+    .available {
+    background-color: #d4edda;
+    cursor: pointer;
+    transition: background 0.2s;
+    }
+    .available:hover {
+    background-color: #c3e6cb;
+    }
+</style>
+</head>
+<body>
+    <head>
+    <meta charset="UTF-8" />
+    <title>Chọn phòng ký túc xá</title>
+    <style>
+        
+    </style>
+    </head>
+    <body>
+    <a href="admin.html">🛠 Quản trị viên</a>
+    <h2>Chọn phòng còn chỗ trống</h2>
+    <p>
+        Click vào phòng bạn muốn đăng ký. Sau đó điền tên và email để gửi yêu
+        cầu cho quản trị viên.
+    </p>
+    <div id="rooms"></div>
+
+    <script>
+        const MAX = 4;
+        const adminEmail = "nhan01258688613@gmail.com"; // thay bằng email thật của admin
+
+        const rooms = [
+        { id: "P101", current: 4 },
+        { id: "P102", current: 2 },
+        { id: "P103", current: 3 },
+        { id: "P104", current: 0 },
+        ];
+
+        const roomList = document.getElementById("rooms");
+
+        function sendRequest(roomId) {
+        const name = prompt("Nhập tên của bạn:");
+        const email = prompt("Nhập email để admin liên hệ:");
+
+        if (!name || !email) {
+            alert("Bạn cần nhập đầy đủ thông tin.");
+            return;
+        }
+
+        const subject = encodeURIComponent(
+            `Yêu cầu đăng ký phòng ${roomId}`
+        );
+        const body = encodeURIComponent(
+            `Tên sinh viên: ${name}\nEmail: ${email}\nPhòng muốn đăng ký: ${roomId}\n\nVui lòng duyệt yêu cầu này.`
+        );
+        const mailto = `mailto:${adminEmail}?subject=${subject}&body=${body}`;
+        window.location.href = mailto;
+        }
+
+        // Hiển thị danh sách phòng
+        rooms.forEach((room) => {
+        const div = document.createElement("div");
+        const isFull = room.current >= MAX;
+        div.className = "room " + (isFull ? "full" : "available");
+        div.textContent = `${room.id}\n${room.current}/${MAX} người`;
+        if (!isFull) {
+            div.onclick = () => sendRequest(room.id);
+        }
+        roomList.appendChild(div);
+        });
+    </script>
+    </body>
+</html>
+<div id="rooms"></div>
+
+<script>
+    const MAX = 4;
+    const rooms = [
+    { id: "P101", current: 4 },
+    { id: "P102", current: 2 },
+    { id: "P103", current: 3 },
+    { id: "P104", current: 0 },
+    ];
+
+    const roomList = document.getElementById("rooms");
+
+    rooms.forEach((room) => {
+    const div = document.createElement("div");
+    const isFull = room.current >= MAX;
+    div.className = "room " + (isFull ? "full" : "available");
+    div.textContent = `${room.id}\n${room.current}/${MAX} người`;
+    if (!isFull) {
+        div.onclick = () => alert(`Bạn đã chọn phòng ${room.id}`);
+    }
+    roomList.appendChild(div);
+    });
+
+    function sendRequest(roomId) {
+    const name = prompt("Nhập tên của bạn:");
+    const email = prompt("Nhập email để admin liên hệ:");
+
+    if (!name || !email) {
+        alert("Bạn cần nhập đầy đủ thông tin.");
+        return;
+    }
+
+    const subject = encodeURIComponent(`Yêu cầu đăng ký phòng ${roomId}`);
+    const body = encodeURIComponent(
+        `Tên: ${name}\nEmail: ${email}\nPhòng muốn đăng ký: ${roomId}`
+    );
+    const mailto = `mailto:nhan01258688613@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailto;
+    }
+</script>
+</body>
+</html>
