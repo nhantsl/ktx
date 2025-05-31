@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý phòng</title>
+  <style>
+    table { border-collapse: collapse; width: 400px; }
+    td, th { border: 1px solid #aaa; padding: 8px; text-align: center; }
+    button { padding: 4px 8px; margin: 2px; }
+  </style>
+</head>
+<body>
+  <h2>Quản trị viên – Quản lý phòng</h2>
+  <table id="roomTable">
+    <tr><th>Phòng</th><th>Số người</th><th>Thao tác</th></tr>
+  </table>
+
+  <script>
+    const MAX = 4;
+    let rooms = [
+      { id: 'P101', current: 4 },
+      { id: 'P102', current: 2 },
+      { id: 'P103', current: 3 },
+      { id: 'P104', current: 0 }
+    ];
+
+    const table = document.getElementById('roomTable');
+
+    function render() {
+      table.innerHTML = `<tr><th>Phòng</th><th>Số người</th><th>Thao tác</th></tr>`;
+      rooms.forEach((room, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${room.id}</td>
+          <td>${room.current} / ${MAX}</td>
+          <td>
+            <button onclick="add(${index})" ${room.current >= MAX ? 'disabled' : ''}>➕</button>
+            <button onclick="remove(${index})" ${room.current <= 0 ? 'disabled' : ''}>➖</button>
+          </td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    function add(i) {
+      if (rooms[i].current < MAX) rooms[i].current++;
+      render();
+    }
+
+    function remove(i) {
+      if (rooms[i].current > 0) rooms[i].current--;
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
